@@ -59,3 +59,29 @@ body {
 }
 
 /* LOGIN AND SIGNUP PAGE END */
+
+/* BOOKS TABLE START */
+.tbl-books {
+	margin: auto;
+	width: 80%;
+}
+
+.tbl-books td {
+	border: 1.5px solid #E5E5E5;
+	padding: 7px;	
+}
+
+.tbl-books th {
+	color: #999;
+	background-color: #F6F6F6;
+	border: 1.5px solid #E5E5E5;
+	padding: 12px 10px;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.tbl-books .center {
+	text-align: center;
+}
+
+/* BOOKS TABLE END */
