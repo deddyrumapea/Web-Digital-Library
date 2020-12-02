@@ -10,12 +10,23 @@ if (isset($_POST["btn-login"])) {
 	if (mysqli_num_rows($result) === 1) {
 		$row = mysqli_fetch_assoc($result);
 		if (password_verify($password, $row["password"])) {
-			header("Location: index.php");
-			exit();
+			echo "
+			<script>
+				alert('Welcome, $username!');
+				document.location = 'index.php';
+			</script>";
+		} else {
+			echo "
+			<script>
+				alert('Password salah!');
+			</script>";
 		}
+	} else {
+		echo "
+		<script>
+			alert('Akun dengan username \'$username\' tidak ditemukan!');
+		</script>";
 	}
-	$error = true;
-	echo "salah";
 }
 
 ?>
