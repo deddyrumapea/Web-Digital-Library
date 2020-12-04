@@ -3,14 +3,22 @@ include 'database/inc.php';
 include 'functions/queries.php';
 
 // Showing books list
-$limit = (isset($_GET["limit"]) && ($_GET["limit"] % 3 == 0) && ($_GET["limit"] > 0))? $_GET["limit"] : 6;
-$total = (int) queryRead("SELECT COUNT(*) AS total FROM book")[0]["total"];
-$pages = ceil($total / $limit);
 $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
+$limit = (isset($_GET["limit"]) && ($_GET["limit"] % 3 == 0) && ($_GET["limit"] > 6))? $_GET["limit"] : 6;
 $offset = $limit * ($page - 1);
-
-$books =  queryRead("SELECT * FROM book ORDER BY title LIMIT $offset, $limit");
 $params = "?limit=$limit";
+
+if (isset($_GET["search"]) && trim($_GET["search"]) != "") {
+	$search = htmlspecialchars($_GET["search"]);
+	$params .= "&search=$search";
+	$total = (int) queryRead("SELECT COUNT(*) AS total FROM book WHERE title LIKE '%$search%'")[0]["total"];
+	$books = queryRead("SELECT * FROM book WHERE title LIKE '%$search%' ORDER BY title LIMIT $offset, $limit");
+} else {
+	$total = (int) queryRead("SELECT COUNT(*) AS total FROM book")[0]["total"];	
+	$books =  queryRead("SELECT * FROM book ORDER BY title LIMIT $offset, $limit");
+}
+
+$pages = ceil($total / $limit);
 ?>
 
 <!DOCTYPE html>
@@ -24,8 +32,10 @@ $params = "?limit=$limit";
 <body>
 	<header>
 		<nav class="nav-menu">
-			<h1><img class="logo" src="assets/images/logo.png"><a href="">DIGITAL LIBRARY</a></h1>
-			<input class="search-bar" type="text" placeholder="Search">
+			<h1><img class="logo" src="assets/images/logo.png"><a href="./">DIGITAL LIBRARY</a></h1>
+			<form action="" method="get">
+				<input name="search" class="search-bar" type="text" placeholder="Search" <?= (isset($search)) ? "value='$search'" : ""; ?>>
+			</form>
 			<a href="#"><i class="fas fa-plus-circle"></i> ADD BOOK</a>
 			<!-- IF SESSSION DOES NOT EXIST -->
 			<a href="login.php">LOGIN</a>
@@ -33,32 +43,47 @@ $params = "?limit=$limit";
 		</nav>
 	</header>
 	<main>
-		<div class="page-nav-limit">
-			<p>Show
-				<select onchange="location.replace(`?limit=${this.value}`)" name="limit">
-					<?php for ($i = 6; $i <= 18; $i += 3) : ?>
-						<option value="<?= $i; ?>" <?= ($i == $limit)? "selected" : ""; ?>>
-							<?= $i; ?>
-						</option>
-					<?php endfor; ?>
-				</select>
-				data per page
-			</p>
-		</div>
-		<div class="page-nav">
+		<?php if (isset($search)) { ?>
+			<?php if (sizeof($books) > 0) { ?>
+				<div class="search-info">
+					<p>Search results for '<?= $search; ?>'</p>
+				</div>
+			<?php } else { ?>
+				<div class="search-info">
+					<p>We couldn't find any search results matching '<?= $search; ?>'. <a href="./">Go back.</a></p>
+				</div>
+			<?php } ?>
+		<?php } ?>
 
-			<a href="<?= ($page > 1) ? $params."&page=".($page - 1) : "#"; ?>"><button>
-				<i class="fas fa-angle-left"></i> Previous
-			</button></a>
-			<?php for ($i = 1; $i <= $pages; $i++): ?>
-				<a href="<?= $params."&page=".$i; ?>"><button <?= ($i == $page) ? "class='active' disabled" : ""; ?>>
-					<?= $i; ?>
+		<?php if (sizeof($books) > 0) : ?>
+			<div class="page-nav-limit">
+				<p>Show
+					<select onchange="location.replace(`<?= $params; ?>&limit=${this.value}`)" name="limit">
+						<?php for ($i = 6; $i <= 18; $i += 3) : ?>
+							<option value="<?= $i; ?>" <?= ($i == $limit)? "selected" : ""; ?>>
+								<?= $i; ?>
+							</option>
+						<?php endfor; ?>
+					</select>
+					data per page
+				</p>
+			</div>
+
+			<div class="page-nav">
+				<a href="<?= ($page > 1) ? $params."&page=".($page - 1) : "#"; ?>"><button>
+					<i class="fas fa-angle-left"></i> Previous
 				</button></a>
-			<?php endfor; ?>
-			<a href="<?= ($page < $pages) ? $params."&page=".($page + 1) : "#"; ?>"><button>
-				Next <i class="fas fa-angle-right"></i>
-			</button></a>
-		</div>
+				<?php for ($i = 1; $i <= $pages; $i++): ?>
+					<a href="<?= $params."&page=".$i; ?>"><button <?= ($i == $page) ? "class='active' disabled" : ""; ?>>
+						<?= $i; ?>
+					</button></a>
+				<?php endfor; ?>
+				<a href="<?= ($page < $pages) ? $params."&page=".($page + 1) : "#"; ?>"><button>
+					Next <i class="fas fa-angle-right"></i>
+				</button></a>
+			</div>
+		<?php endif; ?>
+
 		<div class="books-list-container cf">
 			<?php foreach ($books as $row) : ?>
 				<div class="book">
@@ -77,19 +102,23 @@ $params = "?limit=$limit";
 				</div>
 			<?php endforeach; ?>
 		</div>
-		<div class="page-nav">
-			<a href="<?= ($page > 1) ? $params."&page=".($page - 1) : "#"; ?>"><button>
-				<i class="fas fa-angle-left"></i> Previous
-			</button></a>
-			<?php for ($i = 1; $i <= $pages; $i++): ?>
-				<a href="<?= $params."&page=".$i; ?>"><button <?= ($i == $page) ? "class='active' disabled" : ""; ?>>
-					<?= $i; ?>
+
+		<?php if (sizeof($books) > 0) : ?>
+			<div class="page-nav">
+				<a href="<?= ($page > 1) ? $params."&page=".($page - 1) : "#"; ?>"><button>
+					<i class="fas fa-angle-left"></i> Previous
 				</button></a>
-			<?php endfor; ?>
-			<a href="<?= ($page < $pages) ? $params."&page=".($page + 1) : "#"; ?>"><button>
-				Next <i class="fas fa-angle-right"></i>
-			</button></a>
-		</div>
+				<?php for ($i = 1; $i <= $pages; $i++): ?>
+					<a href="<?= $params."&page=".$i; ?>"><button <?= ($i == $page) ? "class='active' disabled" : ""; ?>>
+						<?= $i; ?>
+					</button></a>
+				<?php endfor; ?>
+				<a href="<?= ($page < $pages) ? $params."&page=".($page + 1) : "#"; ?>"><button>
+					Next <i class="fas fa-angle-right"></i>
+				</button></a>
+			</div>
+		<?php endif; ?>
+
 	</main>
 	<footer>
 		<p>&copy 2020 Deddy Romnan Rumapea</p>

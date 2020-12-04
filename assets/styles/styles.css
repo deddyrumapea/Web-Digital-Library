@@ -225,4 +225,20 @@ button {
 	transition: 0.5s;
 	text-decoration: none;
 }
+
+.search-info {
+	margin: 10px;
+}
+
+.search-info a {
+	transition: 0.5s;
+	text-decoration: none;
+	font-weight: bold;
+	color: blue;
+}
+
+.search-info a:hover {
+	transition: 0.5s;
+	color: black;
+}
 /* BOOKS GRID LIST END */
