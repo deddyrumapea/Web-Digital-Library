@@ -114,13 +114,14 @@ button {
 	transition: 0.5s;
 }
 
-.nav-menu input[type=text] {
+.search-bar {
 	float: left;
 	width: 40%;
 	padding: 13px;
 	margin: 7px 10px;
 	border: none;
 	font-size: 14px;
+	border-radius: 2px;
 }
 
 /* NAV MENU END */

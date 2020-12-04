@@ -25,7 +25,7 @@ $params = "?limit=$limit";
 	<header>
 		<nav class="nav-menu">
 			<h1><img class="logo" src="assets/images/logo.png"><a href="">DIGITAL LIBRARY</a></h1>
-			<input type="text" placeholder="Search">
+			<input class="search-bar" type="text" placeholder="Search">
 			<a href="#"><i class="fas fa-plus-circle"></i> ADD BOOK</a>
 			<!-- IF SESSSION DOES NOT EXIST -->
 			<a href="login.php">LOGIN</a>
