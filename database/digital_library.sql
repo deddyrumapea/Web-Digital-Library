@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2020 at 12:53 AM
+-- Generation Time: Dec 05, 2020 at 06:18 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -42,12 +42,12 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`id`, `title`, `author`, `publisher`, `year`, `pages`, `cover_img`) VALUES
-('BOOK-0WEJW', 'Atomic Habits', 'James Clear', 'Avery', 2018, 319, 'assets/images/IMG (20).jpg'),
+('BOOK-0WEJW', 'Atomic Habits', 'James Clear', 'Avery', 2018, 320, 'assets/images/5fcb667c937ca.jpg'),
 ('BOOK-8ADS8', 'The 7 Habits of Highly Effective People', 'Stephen R. Covey', 'Free Press', 2004, 371, 'assets/images/IMG (11).jpg'),
 ('BOOK-A1FL9', 'Guns, Germs, and Steel', 'Jared M. Diamond', 'W. W. Norton & Company', 1999, 457, 'assets/images/IMG (1).jpg'),
 ('BOOK-AA29H', 'The 4-Hour Workweek', 'Timothy Ferriss', 'Harmony Books', 2007, 308, 'assets/images/IMG (13).jpg'),
 ('BOOK-ADM12', 'Team of Rivals', 'Doris Kearns Goodwin', 'Simon & Schuster', 2006, 916, 'assets/images/IMG (7).jpg'),
-('BOOK-DK3S1', 'A People\'s History of the United States', 'Howard Zinn', 'Harper Perennial', 2005, 729, 'assets/images/IMG (25).jpg'),
+('BOOK-DK3S1', 'A People\'s History of the United States', 'Howard Zinn', 'Harper Perennial', 2005, 731, 'assets/images/IMG (25).jpg'),
 ('BOOK-DS39S', 'Factfulness', 'Hans Rosling', 'Sceptre', 2018, 342, 'assets/images/IMG (19).jpg'),
 ('BOOK-DSAF1', 'Homo Deus: A History of Tomorrow', 'Yuval Noah Harari', 'Harper', 2017, 449, 'assets/images/IMG (17).jpg'),
 ('BOOK-DSF19', 'Why We Sleep', 'Matthew Walker', 'Scribner', 2017, 368, 'assets/images/IMG (18).jpg'),
@@ -60,7 +60,7 @@ INSERT INTO `book` (`id`, `title`, `author`, `publisher`, `year`, `pages`, `cove
 ('BOOK-LW3JD', 'The Origin of Species', 'Charles Darwin', 'CABI', 2003, 336, 'assets/images/IMG (22).jpg'),
 ('BOOK-MQWJ1', 'Who Moved My Cheese?', 'Spencer Johnson', 'Vermilion', 2002, 96, 'assets/images/IMG (10).jpg'),
 ('BOOK-NWE8S', 'Thinking, Fast and Slow', 'Daniel Kahneman', 'Farrar', 2011, 499, 'assets/images/IMG (15).jpg'),
-('BOOK-PEF31', 'A Brief History of Time', 'Stephen Hawking', 'Bantam', 1988, 101, 'assets/images/IMG (21).jpg'),
+('BOOK-PEF31', 'A Brief History of Time', 'Stephen Hawking', 'Bantam', 1988, 102, 'assets/images/IMG (21).jpg'),
 ('BOOK-QJ1KP', 'John Adams', 'David McCullough', 'Simon & Schuster Paperbacks', 2001, 751, 'assets/images/IMG (8).jpg'),
 ('BOOK-SAD3Q', 'The Selfish Gene', 'Richard Dawkins', 'Oxford University Press, USA', 1990, 236, 'assets/images/IMG (23).jpg'),
 ('BOOK-SK38A', 'The Richest Man in Babylon', 'George S. Clason', 'Berkley Books', 2008, 194, 'assets/images/IMG (6).jpg');
@@ -83,8 +83,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `email`, `address`) VALUES
-('admin', '$2y$10$9jiv5fVFYZeaIxf4j4rFX..b0T4xDBRAmO8krNVqXV8/mNbPMkIQq', 'admin@digilib.com', '3778  Brown Avenue, Chappells, South Carolina'),
-('joko', '$2y$10$c4K5qnyKSq/saLdCKCu2/ObpixY8MIPKq2SpjG/FLZW6isOqCjN5y', 'joko@gmail.com', 'Jalan Pakubuwono no. 5');
+('admin', '$2y$10$9jiv5fVFYZeaIxf4j4rFX..b0T4xDBRAmO8krNVqXV8/mNbPMkIQq', 'admin@digilib.com', '3778  Brown Avenue, Chappells, South Carolina');
 
 --
 -- Indexes for dumped tables
