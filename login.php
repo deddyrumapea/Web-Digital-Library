@@ -2,7 +2,7 @@
 require 'database/inc.php';
 
 if (isset($_POST["btn-login"])) {
-	$username = $_POST["username"];
+	$username = strEscape($_POST["username"]);
 	$password = $_POST["password"];
 
 	$result = mysqli_query($conn, "SELECT * FROM user WHERE username = '$username'");
