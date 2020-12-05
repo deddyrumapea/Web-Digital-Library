@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2020 at 06:18 PM
+-- Generation Time: Dec 05, 2020 at 06:33 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -42,7 +42,7 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`id`, `title`, `author`, `publisher`, `year`, `pages`, `cover_img`) VALUES
-('BOOK-0WEJW', 'Atomic Habits', 'James Clear', 'Avery', 2018, 320, 'assets/images/5fcb667c937ca.jpg'),
+('BOOK-0WEJW', 'Atomic Habits', 'James Clear', 'Avery', 2018, 320, 'assets/images/IMG (20).jpg'),
 ('BOOK-8ADS8', 'The 7 Habits of Highly Effective People', 'Stephen R. Covey', 'Free Press', 2004, 371, 'assets/images/IMG (11).jpg'),
 ('BOOK-A1FL9', 'Guns, Germs, and Steel', 'Jared M. Diamond', 'W. W. Norton & Company', 1999, 457, 'assets/images/IMG (1).jpg'),
 ('BOOK-AA29H', 'The 4-Hour Workweek', 'Timothy Ferriss', 'Harmony Books', 2007, 308, 'assets/images/IMG (13).jpg'),
