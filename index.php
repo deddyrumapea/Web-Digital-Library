@@ -95,8 +95,9 @@ $pages = ceil($total / $limit);
 						<p class="book-year"><i class="far fa-calendar-alt"></i> <?= $row["year"]; ?></p>
 						<p class="book-pages"><i class="far fa-file-alt"></i> <?= $row["pages"]; ?> pages</p>
 						<div class="book-action-container">
-							<a href="#"><button class="btn-edit"><i class="far fa-edit"></i> Edit</button></a>
-							<a href="#"><button class="btn-delete"><i class="far fa-trash-alt"></i> Delete</button></a>
+							<?php $id = $row["id"] ?>
+							<a href='<?= $params."&edit=$id"; ?>'><button class="btn-edit"><i class="far fa-edit"></i> Edit</button></a>
+							<a href='<?= $params."&delete=$id"; ?>'><button class="btn-delete"><i class="far fa-trash-alt"></i> Delete</button></a>
 						</div>
 					</div>
 				</div>
@@ -119,11 +120,63 @@ $pages = ceil($total / $limit);
 			</div>
 		<?php endif; ?>
 
+		<?php if (isset($_GET["edit"])) : ?>
+			<?php 
+			$id = $_GET["edit"];
+			$book = queryRead("SELECT * FROM book WHERE id = '$id'")[0];
+			?>
+			<div id="modal-edit" class="modal modal-edit">
+				<div class="modal-content cf">
+					<form action="functions/book_edit.php" method="post">
+						<img src="<?= $book['cover_img']; ?>" alt="book-cover">
+						<table class="table-form">
+							<tr>
+								<th><label for="cover">Cover : </label></th>
+								<td><input value="<?= $book['cover_img']; ?>" type="text" name="cover" class="readonly" readonly><br></td>
+							</tr>
+							<tr>
+								<th><label for="id">ID : </label></th>
+								<td><input value="<?= $book['id']; ?>" type="text" name="id" class="readonly" readonly><br></td>
+							</tr>
+							<tr>
+								<th><label for="title">Title : </label></th>
+								<td><input value="<?= $book['title']; ?>" type="text" name="title"><br></td>
+							</tr>
+							<tr>
+								<th><label for="author">Author : </label></th>
+								<td><input value="<?= $book['author']; ?>" type="text" name="author"><br></td>
+							</tr>
+							<tr>
+								<th><label for="title">Publisher : </label></th>
+								<td><input value="<?= $book['publisher']; ?>" type="text" name="publisher"><br></td>
+							</tr>
+
+							<tr>
+								<th><label for="title">Year : </label></th>
+								<td><input value="<?= $book['year']; ?>" type="number" min="1000" name="year"><br></td>
+							</tr>
+
+							<tr>
+								<th><label for="title">Pages : </label></th>
+								<td><input value="<?= $book['pages']; ?>" type="number" min="1" name="pages"><br></td>
+							</tr>
+							<tr>
+								<th colspan="2">
+									<button type="submit" class="btn-submit" name="submit-edit"><i class="fas fa-paper-plane"></i> Submit</button>
+								</th>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		<?php endif; ?>
+
 	</main>
 	<footer>
 		<p>&copy 2020 Deddy Romnan Rumapea</p>
 	</footer>
 
+	<script src="assets/js/index.js"></script>
 	<script src="https://kit.fontawesome.com/6606a30803.js" crossorigin="anonymous"></script>
 </body>
 </html>
