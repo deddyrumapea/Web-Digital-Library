@@ -41,10 +41,13 @@ $pages = ceil($total / $limit);
 			<form action="" method="get">
 				<input name="search" class="search-bar" type="text" placeholder="Search" <?= (isset($search)) ? "value='$search'" : ""; ?>>
 			</form>
-			<a href="#"><i class="fas fa-plus-circle"></i> ADD BOOK</a>
-			<!-- IF SESSSION DOES NOT EXIST -->
-			<a href="#"><?= $_SESSION["username"]; ?></a>
-			<a href="functions/logout.php">LOGOUT</a>
+			<a href="?add"><i class="fas fa-plus-circle"></i> ADD BOOK</a>
+			<div class="dropdown">
+				<a href="#"><i class="fas fa-caret-down"></i> <?= strtoupper($_SESSION["username"]); ?></a>
+				<div class="dropdown-content">
+					<a href="functions/logout.php"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+				</div>
+			</div>
 		</nav>
 	</header>
 	<main>
@@ -102,7 +105,7 @@ $pages = ceil($total / $limit);
 						<div class="book-action-container">
 							<?php $id = $row["id"] ?>
 							<a href='<?= $params."&edit=$id"; ?>'><button class="btn-edit"><i class="far fa-edit"></i> Edit</button></a>
-							<a href='<?= $params."&delete=$id"; ?>'><button class="btn-delete"><i class="far fa-trash-alt"></i> Delete</button></a>
+							<a href='functions/book_delete.php?id=<?= $row["id"]; ?>' onclick="return confirm('Are you sure want to permanently delete this item?')"><button class="btn-delete"><i class="far fa-trash-alt"></i> Delete</button></a>
 						</div>
 					</div>
 				</div>
@@ -132,42 +135,94 @@ $pages = ceil($total / $limit);
 			?>
 			<div id="modal-edit" class="modal modal-edit">
 				<div class="modal-content cf">
-					<form action="functions/book_edit.php" method="post">
+					<form action="functions/book_edit.php" enctype="multipart/form-data" method="post">
 						<img src="<?= $book['cover_img']; ?>" alt="book-cover">
 						<table class="table-form">
 							<tr>
-								<th><label for="cover">Cover : </label></th>
-								<td><input value="<?= $book['cover_img']; ?>" type="text" name="cover" class="readonly" readonly><br></td>
+								<th><label for="id">ID : </label></th>
+								<td><input value="<?= $book['id']; ?>" type="text" name="id" class="readonly" readonly required><br></td>
 							</tr>
 							<tr>
-								<th><label for="id">ID : </label></th>
-								<td><input value="<?= $book['id']; ?>" type="text" name="id" class="readonly" readonly><br></td>
+								<th><label for="cover">Cover : </label></th>
+								<td><input type="file" name="cover" accept=".jpg, .png, .jpeg"><br></td>
+								<input type="hidden" name="old-cover" value="<?= $book["cover_img"]; ?>">
 							</tr>
 							<tr>
 								<th><label for="title">Title : </label></th>
-								<td><input value="<?= $book['title']; ?>" type="text" name="title"><br></td>
+								<td><input value="<?= $book['title']; ?>" type="text" name="title" required><br></td>
 							</tr>
 							<tr>
 								<th><label for="author">Author : </label></th>
-								<td><input value="<?= $book['author']; ?>" type="text" name="author"><br></td>
+								<td><input value="<?= $book['author']; ?>" type="text" name="author" required><br></td>
 							</tr>
 							<tr>
 								<th><label for="title">Publisher : </label></th>
-								<td><input value="<?= $book['publisher']; ?>" type="text" name="publisher"><br></td>
+								<td><input value="<?= $book['publisher']; ?>" type="text" name="publisher" required><br></td>
 							</tr>
 
 							<tr>
 								<th><label for="title">Year : </label></th>
-								<td><input value="<?= $book['year']; ?>" type="number" min="1000" name="year"><br></td>
+								<td><input value="<?= $book['year']; ?>" type="number" min="1000" name="year" required><br></td>
 							</tr>
 
 							<tr>
 								<th><label for="title">Pages : </label></th>
-								<td><input value="<?= $book['pages']; ?>" type="number" min="1" name="pages"><br></td>
+								<td><input value="<?= $book['pages']; ?>" type="number" min="1" name="pages" required><br></td>
 							</tr>
 							<tr>
 								<th colspan="2">
 									<button type="submit" class="btn-submit" name="submit-edit"><i class="fas fa-paper-plane"></i> Submit</button>
+								</th>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		<?php endif; ?>
+
+		<?php if (isset($_GET["add"])) : ?>
+			<?php 
+			do {
+				$id = "BOOK-".strtoupper(substr(bin2hex(random_bytes(3)), 0, 5));
+			} while (sizeof(queryRead("SELECT * FROM book WHERE id='$id'")) > 0);
+			?>
+			<div id="modal-add" class="modal modal-add">
+				<div class="modal-content cf">
+					<form action="functions/book_add.php" enctype="multipart/form-data" method="post">
+						<table class="table-form">
+							<tr>
+								<th><label for="id">ID : </label></th>
+								<td><input value="<?= $id; ?>" type="text" name="id" class="readonly" readonly required><br></td>
+							</tr>
+							<tr>
+								<th><label for="cover">Cover : </label></th>
+								<td><input type="file" name="cover" accept=".jpg, .png, .jpeg" required><br></td>
+							</tr>
+							<tr>
+								<th><label for="title">Title : </label></th>
+								<td><input type="text" name="title" required><br></td>
+							</tr>
+							<tr>
+								<th><label for="author">Author : </label></th>
+								<td><input type="text" name="author" required><br></td>
+							</tr>
+							<tr>
+								<th><label for="title">Publisher : </label></th>
+								<td><input type="text" name="publisher" required><br></td>
+							</tr>
+
+							<tr>
+								<th><label for="title">Year : </label></th>
+								<td><input type="number" min="1000" name="year" required><br></td>
+							</tr>
+
+							<tr>
+								<th><label for="title">Pages : </label></th>
+								<td><input type="number" min="1" name="pages" required><br></td>
+							</tr>
+							<tr>
+								<th colspan="2">
+									<button type="submit" class="btn-submit" name="submit-add"><i class="fas fa-paper-plane"></i> Submit</button>
 								</th>
 							</tr>
 						</table>
