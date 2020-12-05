@@ -1,4 +1,10 @@
 <?php 
+session_start();
+if (isset($_SESSION["login"])) {
+	header("Location: index.php");
+	exit;
+}
+
 require 'database/inc.php';
 
 if (isset($_POST["sign-up-btn"])) {
@@ -9,6 +15,9 @@ if (isset($_POST["sign-up-btn"])) {
 
 	mysqli_query($conn, "INSERT INTO user VALUES ('$username', '$password', '$email', '$address')");
 	if (mysqli_affected_rows($conn) === 1) {
+		// Set session
+			$_SESSION["login"] = true;
+			$_SESSION["username"] = $username;
 		echo "
 		<script>
 			alert('Welcome, $username!');

@@ -1,4 +1,11 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["login"])) {
+	header("Location: login.php");
+	exit;
+}
+
 include 'database/inc.php';
 
 // Showing books list
@@ -19,7 +26,6 @@ if (isset($_GET["search"]) && trim($_GET["search"]) != "") {
 
 $pages = ceil($total / $limit);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,8 +43,8 @@ $pages = ceil($total / $limit);
 			</form>
 			<a href="#"><i class="fas fa-plus-circle"></i> ADD BOOK</a>
 			<!-- IF SESSSION DOES NOT EXIST -->
-			<a href="login.php">LOGIN</a>
-			<a href="#">PROFILE</a>
+			<a href="#"><?= $_SESSION["username"]; ?></a>
+			<a href="functions/logout.php">LOGOUT</a>
 		</nav>
 	</header>
 	<main>

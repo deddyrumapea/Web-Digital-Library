@@ -1,4 +1,11 @@
 <?php 
+session_start();
+
+if (isset($_SESSION["login"])) {
+	header("Location: index.php");
+	exit;
+}
+
 require 'database/inc.php';
 
 if (isset($_POST["btn-login"])) {
@@ -10,21 +17,25 @@ if (isset($_POST["btn-login"])) {
 	if (mysqli_num_rows($result) === 1) {
 		$row = mysqli_fetch_assoc($result);
 		if (password_verify($password, $row["password"])) {
+			// Set session
+			$_SESSION["login"] = true;
+			$_SESSION["username"] = $username;
+
 			echo "
 			<script>
-				alert('Welcome, $username!');
-				document.location = 'index.php';
+			alert('Welcome, $username!');
+			document.location = 'index.php';
 			</script>";
 		} else {
 			echo "
 			<script>
-				alert('Password salah!');
+			alert('Password salah!');
 			</script>";
 		}
 	} else {
 		echo "
 		<script>
-			alert('Akun dengan username \'$username\' tidak ditemukan!');
+		alert('Akun dengan username \'$username\' tidak ditemukan!');
 		</script>";
 	}
 }
