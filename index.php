@@ -1,6 +1,5 @@
 <?php 
 include 'database/inc.php';
-include 'functions/queries.php';
 
 // Showing books list
 $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
@@ -9,7 +8,7 @@ $offset = $limit * ($page - 1);
 $params = "?limit=$limit";
 
 if (isset($_GET["search"]) && trim($_GET["search"]) != "") {
-	$search = htmlspecialchars($_GET["search"]);
+	$search = strEscape($_GET["search"]);
 	$params .= "&search=$search";
 	$total = (int) queryRead("SELECT COUNT(*) AS total FROM book WHERE title LIKE '%$search%'")[0]["total"];
 	$books = queryRead("SELECT * FROM book WHERE title LIKE '%$search%' ORDER BY title LIMIT $offset, $limit");

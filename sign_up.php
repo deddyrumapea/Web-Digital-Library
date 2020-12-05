@@ -2,10 +2,10 @@
 require 'database/inc.php';
 
 if (isset($_POST["sign-up-btn"])) {
-	$username = $_POST["username"];
+	$username = strEscape($_POST["username"]);
 	$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-	$email = $_POST["email"];
-	$address = $_POST["address"];
+	$email = strEscape($_POST["email"]);
+	$address = strEscape($_POST["address"]);
 
 	mysqli_query($conn, "INSERT INTO user VALUES ('$username', '$password', '$email', '$address')");
 	if (mysqli_affected_rows($conn) === 1) {
