@@ -6,7 +6,10 @@ function editBook(id) {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-	if (event.target == modalEdit) {
-		modalEdit.style.display = "none";
+	var modals = document.getElementsByClassName('modal');
+	for (var i = 0; i < modals.length; i++) {
+		if (event.target == modals[i]) {
+			modals[i].style.display = "none";	
+		}
 	}
 }
