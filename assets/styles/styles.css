@@ -43,6 +43,12 @@ button {
 	margin-top: 50px;
 }
 
+.auth-box h2 {
+	font-size: 20px;
+	margin: 20px 0;
+	font-weight: bold;
+}
+
 .auth-form-container {
 	margin: auto;
 	width: 50%;
