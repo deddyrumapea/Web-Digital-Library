@@ -271,11 +271,17 @@ button {
 	width: 40%; /* Could be more or less, depending on screen size */
 }
 
-.table-form {
+.modal-edit .table-form {
 	padding: 20px;
 	margin: auto;
 	width: 70%;
 	float: left;
+}
+
+.modal-add .table-form {
+	padding: 20px;
+	margin: auto;
+	width: 100%;
 }
 
 .table-form th, .table-form td {
@@ -330,3 +336,32 @@ button {
 	background-color: white;
 }
 /* MODAL BOXES END */
+
+/* LOGOUT DROPDOWN START */
+.dropdown {
+	position: fixed;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	z-index: 1;
+}
+
+.dropdown-content a {
+	color: #B7C9CC;
+	padding: 12px 16px;
+	background-color: #39424E;
+	text-decoration: none;
+	border-radius: 0 0 5px 5px;
+}
+
+.dropdown-content a:hover {
+	color: white;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+/* LOGOUT DROPDOWN END */
